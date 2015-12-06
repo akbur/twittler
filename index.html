@@ -8,6 +8,23 @@
     <script>
 
       $(document).ready(function(){
+
+        //Formats Timestamp mm/dd hh:mm
+        var formatDateTime = function(d) {
+          
+          var pad = function(num) {
+            if (num < 10) { return "0" + num };
+            return num;
+          }
+
+          var date = pad(d.getDate());
+          var month = pad(d.getMonth()+1);
+          var hour = pad(d.getHours());
+          var min = pad(d.getMinutes());
+
+          return month + '/' + date + ' ' + hour + ':' + min;
+        }
+
         var $body = $('body');
         $body.html('');
 
@@ -15,7 +32,14 @@
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          var timestamp = formatDateTime(tweet.created_at);
+          var tweetText = '';
+          tweetText += timestamp + ' ';
+          tweetText += '@<span class="username">';
+          tweetText += tweet.user;
+          tweetText += '</span>: ';
+          tweetText += tweet.message;
+          $tweet.html(tweetText);
           $tweet.appendTo($body);
           index -= 1;
         }
