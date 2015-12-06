@@ -39,44 +39,37 @@
           $tweet.appendTo(appendLocation);
         }
 
-        var getHomeTweets = function() {
-          var tweetLocation = streams.home;
+        //takes a username or 'home' for home timeline
+        //also, takes the location to append the tweets to
+        var getTweets = function(userName, appendLocation) {
+          var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
           var index = tweetLocation.length - 1;
           while(index >= 0){
-            buildTweet(tweetLocation, $home, index);
-            index -= 1;
-          }
-        }
-
-        var getUserTweet = function(userName, $userTimeline) {
-          var tweetLocation = streams.users[userName];
-          var index = tweetLocation.length - 1;
-          while(index >= 0){
-            buildTweet(tweetLocation, $userTimeline, index);
-            index -= 1;
-          }
-        }
+            buildTweet(tweetLocation, appendLocation, index);
+          index -= 1;
+          };
+        };
 
         var $body = $('body');
         $body.html('');
 
         //Add a div for home timeline
-        var $home = $('<div data-location="home"></div>')
+        var $home = $('<div data-location="home"></div>');
         $home.appendTo($body);
-        getHomeTweets();
+        getTweets('home', $home);
 
         //Click handler for username
         //Shows that user's timeline
         $('.username').on('click', function(){
-          var userName = $(this).text();
-        
+  
           //hide the div with home timeline messages
           $home.remove();
 
           //show a div with just this user's messages
+          var userName = $(this).text();
           var $userTimeline = $('<div></div>');
           $userTimeline.appendTo($body);
-          getUserTweet(userName, $userTimeline);
+          getTweets(userName, $userTimeline);
         });
 
       });
