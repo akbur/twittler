@@ -25,7 +25,8 @@
           return month + '/' + date + ' ' + hour + ':' + min;
         }
 
-        function buildTweet(tweetLocation, appendLocation, index) {
+        //FOR DEBUG ADDING INDEX
+        function buildTweet(tweetLocation, index) {
           var tweet = tweetLocation[index];
           var $tweet = $('<div data-user="' + tweet.user + '"></div>');
           var timestamp = formatDateTime(tweet.created_at);
@@ -35,28 +36,66 @@
           tweetText += tweet.user;
           tweetText += '</span>: ';
           tweetText += tweet.message;
+          tweetText += ' -- Index -- ' + index;
           $tweet.html(tweetText);
-          $tweet.appendTo(appendLocation);
+          return $tweet;
         }
+
+        var lastTweet = {
+          indexLastTweetLoaded: 0,
+          get: function() { return this.indexLastTweetLoaded; }, 
+          set: function(i) { this.indexLastTweetLoaded = i; },
+
+        };
 
         //takes a username or 'home' for home timeline
         //also, takes the location to append the tweets to
         var getTweets = function(userName, appendLocation) {
           var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
           var index = tweetLocation.length - 1;
+          lastTweet.set(index);
           while(index >= 0){
-            buildTweet(tweetLocation, appendLocation, index);
-          index -= 1;
+            var $tweet = buildTweet(tweetLocation, index);
+            $tweet.appendTo(appendLocation);
+            index -= 1;
+          };
+        };
+
+        //FIXME: repeats index 10
+        //TODO: combine this with the above function
+        var loadNewTweets = function(userName, prependLocation) {
+          var lastIndex = lastTweet.get();
+          var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
+          var index = tweetLocation.length - 1;
+          lastTweet.set(index);
+          while(lastIndex < index) {
+            var $tweet = buildTweet(tweetLocation, lastIndex);
+            $tweet.prependTo(prependLocation);
+            lastIndex += 1;
           };
         };
 
         var $body = $('body');
         $body.html('');
 
-        //Add a div for home timeline
+        //Add a div for holding Home Timeline Tweets
         var $home = $('<div data-location="home"></div>');
         $home.appendTo($body);
         getTweets('home', $home);
+
+         //Add a Load New Tweets Button for Home Timeline
+        var $homeButton = $('<button type="button">Load New Tweets</button>');
+        $homeButton.addClass('newHomeTweets');
+        $homeButton.prependTo($body);
+        
+        //Click Handler for Home Button
+         $('.newHomeTweets').on('click', function(){
+          console.log('clicking!');
+          loadNewTweets('home', $home);
+        });
+
+
+         //FIXME: Click handler not added to new tweets, only first 10
 
         //Click handler for username
         //Shows that user's timeline
