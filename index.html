@@ -75,43 +75,87 @@
           };
         };
 
+        var showHome = function() {
+
+          //Add a div for holding Home Timeline Tweets
+          var $home = $('<div data-location="home"></div>');
+          $home.appendTo($body);
+          getTweets('home', $home);
+
+           //Add a Load New Tweets Button for Home Timeline
+          var $homeButton = $('<button type="button">Load New Tweets</button>');
+          $homeButton.addClass('newHomeTweets');
+          $homeButton.prependTo($body);
+          
+          //Click Handler for Home Button
+          $('.newHomeTweets').on('click', function(){
+            loadNewTweets('home', $home);
+          });
+
+          var hideHome = function() {
+            $home.remove();
+            $homeButton.remove();
+          };
+
+          return hideHome;
+        };
+
+        var addUsernameClickHandler = function() {
+          //add to a function
+        }
+
         var $body = $('body');
         $body.html('');
-
-        //Add a div for holding Home Timeline Tweets
-        var $home = $('<div data-location="home"></div>');
-        $home.appendTo($body);
-        getTweets('home', $home);
-
-         //Add a Load New Tweets Button for Home Timeline
-        var $homeButton = $('<button type="button">Load New Tweets</button>');
-        $homeButton.addClass('newHomeTweets');
-        $homeButton.prependTo($body);
+        var toggleHome = showHome();
         
-        //Click Handler for Home Button
-         $('.newHomeTweets').on('click', function(){
-          console.log('clicking!');
-          loadNewTweets('home', $home);
-        });
-
-
          //FIXME: Click handler not added to new tweets, only first 10
+         //ALSO, Click handler not added back when returning home;
 
         //Click handler for username
         //Shows that user's timeline
         $('.username').on('click', function(){
-  
-          //hide the div with home timeline messages
-          $home.remove();
+          
+          //Hide Home Timeline
+          toggleHome();
 
           //show a div with just this user's messages
           var userName = $(this).text();
           var $userTimeline = $('<div></div>');
           $userTimeline.appendTo($body);
           getTweets(userName, $userTimeline);
+
+          //Add a Load New Tweets Button for User Timeline
+          var $userButton = $('<button type="button">Load New Tweets</button>');
+          $userButton.addClass('newUserTweets');
+          $userButton.prependTo($body);
+
+          //Click Handler for User Button
+          $('.newUserTweets').on('click', function(){
+            loadNewTweets(userName, $userTimeline);
+          });
+
+          //Add a Return Home Button
+          var $returnHomeButton = $('<button type="button">Return Home</button>');
+
+          //Click Handler for Return Home Button
+          $returnHomeButton.on('click', function(){
+            showHome();
+            console.log('going home!');
+            hideUserTimeline();
+          });
+
+          $returnHomeButton.prependTo($body);
+
+          var hideUserTimeline = function() {
+            $userTimeline.remove();
+            $userButton.remove();
+            $returnHomeButton.remove();
+          };
+
         });
 
-      });
+
+      }); //end of program
 
     </script>
   </body>
