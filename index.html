@@ -82,13 +82,13 @@
 
           //Add a div for holding Home Timeline Tweets
           var $home = $('<div class="home_timeline"></div>');
-          $home.appendTo($body);
+          $home.appendTo($main);
           getTweets('home', $home);
 
            //Add a Load New Tweets Button for Home Timeline
-          var $homeButton = $('<button type="button">Load New Tweets</button>');
+          var $homeButton = $('<div class="button">Load New Tweets</button>');
           $homeButton.addClass('newHomeTweets');
-          $homeButton.prependTo($body);
+          $homeButton.prependTo($main);
           
           //Click Handler for Home Button
           $('.newHomeTweets').on('click', function(){
@@ -115,13 +115,13 @@
             //show a div with just this user's messages
             var userName = $(this).find('.username').text();
             var $userTimeline = $('<div class="user_timeline"></div>');
-            $userTimeline.appendTo($body);
+            $userTimeline.appendTo($main);
             getTweets(userName, $userTimeline);
 
             //Add a Load New Tweets Button for User Timeline
-            var $userButton = $('<button type="button">Load New Tweets</button>');
+            var $userButton = $('<div class="button">Load New Tweets</div>');
             $userButton.addClass('newUserTweets');
-            $userButton.prependTo($body);
+            $userButton.prependTo($main);
 
             //Click Handler for User Button
             $('.newUserTweets').on('click', function(){
@@ -137,13 +137,20 @@
 
         var $body = $('body');
         $body.html('');
+
+        //Add page header and main content divs
+        var $header = $('<header><h1>Twittler</h1></header>');
+        $header.appendTo('body');
+
+        var $main = $('<div class="main"></div>');
+        $main.appendTo('body');
+
         var hideHome = showHome();
         
         //TODO:
         //add a home button
         //add a friend list div
         //add a profile div on the right with either home or user
-        //add header
         //add pictures for users
         
       }); //end of program
