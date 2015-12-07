@@ -6,7 +6,7 @@ body {
 }
 
 p {
-	margin-bottom: 2%;
+	margin: 5px;
 }
 
 .home_timeline, 
@@ -20,18 +20,19 @@ p {
 
 .tweet-div {
 	background-color: #e8edf3;
-	border: 1.5px solid  white;
 	margin: 20px 20px;
 	padding: 5% 15%;
 	text-align: left;
 	border-radius: 12px;
+	box-shadow: 1px 2px 2px #364353;
 
 }
 
 .username {
 	font-weight: bold;
+	font-size: 1.25em;
 }
 
-.username:hover {
-	text-decoration: underline;
+.tweet-div:hover {
+	background-color: #CFD4DA;
 }
