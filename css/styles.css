@@ -5,23 +5,49 @@ body {
 	background-color:#e3e3e3;
 }
 
+header {
+	background: #282444;
+	height: 100px;
+	padding: 20px 50px 0px;
+}
+
+h1 {
+	font-size: 3em;
+	display: inline;
+	color: #e3e3e3;
+}
+
 p {
 	margin: 5px;
+}
+
+.button {
+	display: inline;
+	float: left;
+	text-align: center;
+	border-radius: 12px;
+	box-shadow: 2px 2px 2px #364353;
+	padding: 5px 5px;
+	background-color: #e8edf3;
+}
+
+.main {
+	padding: 0;
 }
 
 .home_timeline, 
 .user_timeline {
 	background-color: white; 
 	height: 100%;
-	width: 50%;
-	margin: auto;
+	width: 45%;
+	margin: 0 auto;
 	border-radius: 12px;
 }
 
 .tweet-div {
 	background-color: #e8edf3;
-	margin: 20px 20px;
-	padding: 5% 15%;
+	margin: 10px 10px;
+	padding: 2% 15%;
 	text-align: left;
 	border-radius: 12px;
 	box-shadow: 1px 2px 2px #364353;
@@ -33,6 +59,7 @@ p {
 	font-size: 1.25em;
 }
 
-.tweet-div:hover {
+.tweet-div:hover,
+.button:hover		 {
 	background-color: #CFD4DA;
 }
