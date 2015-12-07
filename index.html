@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/styles.css">
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
   </head>
@@ -22,21 +23,21 @@
           var hour = pad(d.getHours());
           var min = pad(d.getMinutes());
 
-          return month + '/' + date + ' ' + hour + ':' + min;
+          return month + '/' + date + '  |  ' + hour + ':' + min;
         }
 
         //FOR DEBUG ADDING INDEX
         function buildTweet(tweetLocation, index) {
           var tweet = tweetLocation[index];
           var $tweet = $('<div data-user="' + tweet.user + '"></div>');
+          $tweet.addClass('tweet-div');
           var timestamp = formatDateTime(tweet.created_at);
           var tweetText = '';
-          tweetText += timestamp + ' ';
-          tweetText += '@<span class="username">';
+          tweetText += '<p>'+ ' @<span class="username">';
           tweetText += tweet.user;
-          tweetText += '</span>: ';
-          tweetText += tweet.message;
-          tweetText += ' -- Index -- ' + index;
+          tweetText += '</span>     ' + timestamp + '</p><p>';
+          tweetText += tweet.message + '</p>';
+          //tweetText += ' -- Index -- ' + index;
           $tweet.html(tweetText);
           return $tweet;
         }
@@ -59,6 +60,7 @@
             $tweet.appendTo(appendLocation);
             index -= 1;
           };
+        if (userName === 'home') { addUsernameClickHandlers(); };
         };
 
         //FIXME: repeats index 10
@@ -73,12 +75,13 @@
             $tweet.prependTo(prependLocation);
             lastIndex += 1;
           };
+        if (userName === 'home') { addUsernameClickHandlers(); };
         };
 
         var showHome = function() {
 
           //Add a div for holding Home Timeline Tweets
-          var $home = $('<div data-location="home"></div>');
+          var $home = $('<div class="home_timeline"></div>');
           $home.appendTo($body);
           getTweets('home', $home);
 
@@ -92,67 +95,71 @@
             loadNewTweets('home', $home);
           });
 
+          //FIXME: Home not hiding second time username is clicked.
           var hideHome = function() {
             $home.remove();
             $homeButton.remove();
+            console.log('hiding home');
           };
 
           return hideHome;
         };
 
-        var addUsernameClickHandler = function() {
-          //add to a function
-        }
+        var addUsernameClickHandlers = function() {
+          
+          //Click handler for username
+          //Shows that user's timeline
+          $('.username').on('click', function(){
+            
+            //Hide Home Timeline
+            hideHome();
+
+            //show a div with just this user's messages
+            var userName = $(this).text();
+            var $userTimeline = $('<div class="user_timeline"></div>');
+            $userTimeline.appendTo($body);
+            getTweets(userName, $userTimeline);
+
+            //Add a Load New Tweets Button for User Timeline
+            var $userButton = $('<button type="button">Load New Tweets</button>');
+            $userButton.addClass('newUserTweets');
+            $userButton.prependTo($body);
+
+            //Click Handler for User Button
+            $('.newUserTweets').on('click', function(){
+              loadNewTweets(userName, $userTimeline);
+            });
+
+            // //Add a Return Home Button
+            // var $returnHomeButton = $('<button type="button">Return Home</button>');
+
+            // //Click Handler for Return Home Button
+            // $returnHomeButton.on('click', function(){
+            //   showHome();
+            //   hideUserTimeline();
+            //   addUsernameClickHandlers();
+            // });
+
+            // $returnHomeButton.prependTo($body);
+
+            var hideUserTimeline = function() {
+              $userTimeline.remove();
+              $userButton.remove();
+              // $returnHomeButton.remove();
+            };
+          });
+        };
 
         var $body = $('body');
         $body.html('');
-        var toggleHome = showHome();
+        var hideHome = showHome();
         
          //FIXME: Click handler not added to new tweets, only first 10
          //ALSO, Click handler not added back when returning home;
 
-        //Click handler for username
-        //Shows that user's timeline
-        $('.username').on('click', function(){
-          
-          //Hide Home Timeline
-          toggleHome();
+         
 
-          //show a div with just this user's messages
-          var userName = $(this).text();
-          var $userTimeline = $('<div></div>');
-          $userTimeline.appendTo($body);
-          getTweets(userName, $userTimeline);
-
-          //Add a Load New Tweets Button for User Timeline
-          var $userButton = $('<button type="button">Load New Tweets</button>');
-          $userButton.addClass('newUserTweets');
-          $userButton.prependTo($body);
-
-          //Click Handler for User Button
-          $('.newUserTweets').on('click', function(){
-            loadNewTweets(userName, $userTimeline);
-          });
-
-          //Add a Return Home Button
-          var $returnHomeButton = $('<button type="button">Return Home</button>');
-
-          //Click Handler for Return Home Button
-          $returnHomeButton.on('click', function(){
-            showHome();
-            console.log('going home!');
-            hideUserTimeline();
-          });
-
-          $returnHomeButton.prependTo($body);
-
-          var hideUserTimeline = function() {
-            $userTimeline.remove();
-            $userButton.remove();
-            $returnHomeButton.remove();
-          };
-
-        });
+        
 
 
       }); //end of program
