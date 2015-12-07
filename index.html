@@ -140,6 +140,7 @@
 
         //Add page header and main content divs
         var $header = $('<header><h1>Twittler</h1></header>');
+        $header.wrapInner('<a href="index.html"></a>');
         $header.appendTo('body');
 
         var $main = $('<div class="main"></div>');
