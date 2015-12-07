@@ -88,7 +88,7 @@
            //Add a Load New Tweets Button for Home Timeline
           var $homeButton = $('<div class="button">Load New Tweets</button>');
           $homeButton.addClass('newHomeTweets');
-          $homeButton.prependTo($main);
+          $homeButton.insertAfter($profile);
           
           //Click Handler for Home Button
           $('.newHomeTweets').on('click', function(){
@@ -121,7 +121,10 @@
             //Add a Load New Tweets Button for User Timeline
             var $userButton = $('<div class="button">Load New Tweets</div>');
             $userButton.addClass('newUserTweets');
-            $userButton.prependTo($main);
+            $userButton.insertAfter($profile);
+
+            //Update profile location in sidebar
+            $profile.find('.profile-location').text(userName);
 
             //Click Handler for User Button
             $('.newUserTweets').on('click', function(){
@@ -138,22 +141,29 @@
         var $body = $('body');
         $body.html('');
 
-        //Add page header and main content divs
+        //Add Page Header Div
         var $header = $('<header><h1>Twittler</h1></header>');
         $header.wrapInner('<a href="index.html"></a>');
-        $header.appendTo('body');
+        $header.appendTo($body);
 
+        //Add Main Content Div
         var $main = $('<div class="main"></div>');
-        $main.appendTo('body');
+        $main.appendTo($body);
+
+        //Add Profile Div
+        var $profile = $('<div class="profile"><span class="profile-location"></span></div>');
+        $profile.find('.profile-location').text("Home");
+        $profile.append('<img class="prof-img" src="img/profile.png"/>');
+        $profile.prependTo($main);
 
         var hideHome = showHome();
         
         //TODO:
-        //add a home button
-        //add a friend list div
-        //add a profile div on the right with either home or user
+        //add a friend list div on right that will take to user page
         //add pictures for users
-        
+        //whereat should change based on user page
+
+
       }); //end of program
 
     </script>
