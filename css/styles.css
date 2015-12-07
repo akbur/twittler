@@ -25,19 +25,33 @@ a {
 	text-decoration: none;
 }
 
+.main {
+	padding: 0;
+}
+
 .button {
 	display: inline;
 	float: left;
 	text-align: center;
 	border-radius: 12px;
-	box-shadow: 2px 2px 2px #364353;
+	box-shadow: 1px 1px 1px #364353;
 	padding: 5px 5px;
 	background-color: #e8edf3;
 	cursor: pointer;
+	clear: both;
+	margin:1% 8%;
 }
 
-.main {
-	padding: 0;
+.profile {
+	display: inline-block;
+    float: left;
+    background-color: white;
+    height: 200px;
+    width: 18%;
+    margin: 2% 3%;
+    border-radius: 5%;
+    padding: 20px;
+    box-shadow: inset -1px -1px 1px #364353;
 }
 
 .home_timeline, 
@@ -55,9 +69,24 @@ a {
 	padding: 2% 15%;
 	text-align: left;
 	border-radius: 12px;
-	box-shadow: 1px 2px 2px #364353;
+	box-shadow: 1px 1px 2px #364353;
 	cursor: pointer;
 
+}
+
+.profile-location {
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.5em;
+	display: inherit;
+	background-color: #e8edf3; 
+	border-radius: 5px;
+}
+
+.prof-img {
+	margin: 10px auto;
+    display: inherit;
+    opacity: .75;
 }
 
 .username {
