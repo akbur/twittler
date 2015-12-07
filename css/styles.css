@@ -1,0 +1,37 @@
+
+body {
+	font: 1em/1.5 "Helvetica Neue", Arial, sans-serif;
+	margin: 0;
+	background-color:#e3e3e3;
+}
+
+p {
+	margin-bottom: 2%;
+}
+
+.home_timeline, 
+.user_timeline {
+	background-color: white; 
+	height: 100%;
+	width: 50%;
+	margin: auto;
+	border-radius: 12px;
+}
+
+.tweet-div {
+	background-color: #e8edf3;
+	border: 1.5px solid  white;
+	margin: 20px 20px;
+	padding: 5% 15%;
+	text-align: left;
+	border-radius: 12px;
+
+}
+
+.username {
+	font-weight: bold;
+}
+
+.username:hover {
+	text-decoration: underline;
+}
