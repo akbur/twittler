@@ -25,8 +25,7 @@
 
           return month + '/' + date + '  |  ' + hour + ':' + min;
         }
-
-        //FOR DEBUG ADDING INDEX
+        
         function buildTweet(tweetLocation, index) {
           var tweet = tweetLocation[index];
           var $tweet = $('<div data-user="' + tweet.user + '"></div>');
@@ -37,7 +36,6 @@
           tweetText += tweet.user;
           tweetText += '</span>     ' + timestamp + '</p><p>';
           tweetText += tweet.message + '</p>';
-          //tweetText += ' -- Index -- ' + index;
           $tweet.html(tweetText);
           return $tweet;
         }
@@ -55,7 +53,7 @@
           var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
           var index = tweetLocation.length - 1;
           lastTweet.set(index);
-          while(index >= 0){
+          while(index > 0){
             var $tweet = buildTweet(tweetLocation, index);
             $tweet.appendTo(appendLocation);
             index -= 1;
@@ -63,8 +61,6 @@
         if (userName === 'home') { addUsernameClickHandlers(); };
         };
 
-        //FIXME: repeats index 10
-        //TODO: combine this with the above function
         var loadNewTweets = function(userName, prependLocation) {
           var lastIndex = lastTweet.get();
           var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
@@ -157,14 +153,8 @@
         $profile.prependTo($main);
 
         var hideHome = showHome();
-        
-        //TODO:
-        //add a friend list div on right that will take to user page
-        //add pictures for users
-        //whereat should change based on user page
-
-
-      }); //end of program
+          
+      }); 
 
     </script>
   </body>
