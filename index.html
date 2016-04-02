@@ -7,24 +7,22 @@
   </head>
   <body>
     <script>
-
       $(document).ready(function(){
 
         //Formats Timestamp mm/dd hh:mm
         var formatDateTime = function(d) {
-          
           var pad = function(num) {
-            if (num < 10) { return "0" + num };
+            if (num < 10) { 
+              return "0" + num
+            }
             return num;
-          }
-
+          };
           var date = pad(d.getDate());
           var month = pad(d.getMonth()+1);
           var hour = pad(d.getHours());
           var min = pad(d.getMinutes());
-
-          return month + '/' + date + '  |  ' + hour + ':' + min;
-        }
+          return month + '/' + date + ' | ' + hour + ':' + min;
+        };
         
         function buildTweet(tweetLocation, index) {
           var tweet = tweetLocation[index];
@@ -38,13 +36,16 @@
           tweetText += tweet.message + '</p>';
           $tweet.html(tweetText);
           return $tweet;
-        }
+        };
 
         var lastTweet = {
           indexLastTweetLoaded: 0,
-          get: function() { return this.indexLastTweetLoaded; }, 
-          set: function(i) { this.indexLastTweetLoaded = i; },
-
+          get: function() {
+            return this.indexLastTweetLoaded;
+          }, 
+          set: function(i) {
+            this.indexLastTweetLoaded = i;
+          },
         };
 
         //takes a username or 'home' for home timeline
@@ -53,12 +54,14 @@
           var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
           var index = tweetLocation.length - 1;
           lastTweet.set(index);
-          while(index > 0){
+          while (index > 0) {
             var $tweet = buildTweet(tweetLocation, index);
             $tweet.appendTo(appendLocation);
             index -= 1;
-          };
-        if (userName === 'home') { addUsernameClickHandlers(); };
+          }
+          if (userName === 'home') {
+            addUsernameClickHandlers();
+          }
         };
 
         var loadNewTweets = function(userName, prependLocation) {
@@ -66,16 +69,17 @@
           var tweetLocation = userName === 'home' ? streams.home : streams.users[userName];
           var index = tweetLocation.length - 1;
           lastTweet.set(index);
-          while(lastIndex < index) {
+          while (lastIndex < index) {
             var $tweet = buildTweet(tweetLocation, lastIndex);
             $tweet.prependTo(prependLocation);
             lastIndex += 1;
-          };
-        if (userName === 'home') { addUsernameClickHandlers(); };
+          }
+          if (userName === 'home') {
+            addUsernameClickHandlers();
+          }
         };
 
         var showHome = function() {
-
           //Add a div for holding Home Timeline Tweets
           var $home = $('<div class="home_timeline"></div>');
           $home.appendTo($main);
@@ -87,7 +91,7 @@
           $homeButton.insertAfter($profile);
           
           //Click Handler for Home Button
-          $('.newHomeTweets').on('click', function(){
+          $('.newHomeTweets').on('click', function() {
             loadNewTweets('home', $home);
           });
 
@@ -95,7 +99,6 @@
             $home.remove();
             $homeButton.remove();
           };
-
           return hideHome;
         };
 
@@ -153,7 +156,6 @@
         $profile.prependTo($main);
 
         var hideHome = showHome();
-          
       }); 
 
     </script>
